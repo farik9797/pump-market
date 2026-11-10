@@ -12,6 +12,12 @@ a, button, summary, select, label[for], input[type="checkbox"] { cursor: pointer
 a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
   outline: 2px solid var(--brand); outline-offset: 2px;
 }
+/* На тёмных полосах синяя обводка теряется: делаем белую */
+.on-dark a:focus-visible, .on-dark button:focus-visible { outline-color: #fff; }
+/* Пальцем по мелким ссылкам: на сенсорных экранах зона нажатия 44px, на компьютере вид прежний */
+@media (pointer: coarse) {
+  .tap { padding-top: 12px !important; padding-bottom: 12px !important; }
+}
 .wrap {
   max-width: 1280px; margin-inline: auto; width: 100%;
   padding-left: max(16px, env(safe-area-inset-left, 0px));
@@ -26,6 +32,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   font: 600 14.5px/1 "Inter", Arial, sans-serif; border: 1.5px solid transparent; border-radius: 8px;
   text-decoration: none; transition: background-color .15s, color .15s, border-color .15s;
 }
+.btn:active { transform: translateY(1px); }
 .btn-primary { background: var(--brand); color: #fff; }
 .btn-primary:hover { background: var(--brand-d); }
 .btn-outline { background: #fff; color: var(--brand-d); border-color: var(--brand); }
@@ -41,6 +48,12 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   background: #fff; color: var(--ink); font: 400 16px/1.4 "Inter", Arial, sans-serif;
 }
 .field textarea { min-height: 96px; resize: vertical; }
+.field input:hover, .field textarea:hover, .field select:hover { border-color: var(--muted); }
+.req { color: #B42318; }
+/* Выпадающий список со своей стрелкой вместо стандартной */
+.select-wrap { position: relative; display: block; }
+.select-wrap select { -webkit-appearance: none; appearance: none; padding-right: 40px; }
+.select-wrap svg { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--muted); }
 
 .hero-shade { background: linear-gradient(90deg, rgba(2, 35, 56, .96) 0%, rgba(2, 35, 56, .86) 34%, rgba(2, 35, 56, .35) 58%, rgba(2, 35, 56, 0) 78%); }
 @media (max-width: 767px) { .hero-shade { background: rgba(2, 35, 56, .78); } }
@@ -49,7 +62,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .kz-foot { display: block; width: 150px; max-width: 100%; height: auto; fill: #1B5C8E; }
 
 .tile, .product-card { transition: border-color .15s, box-shadow .15s; }
-.tile:hover, .product-card:hover { border-color: var(--brand); box-shadow: 0 6px 18px rgba(11, 57, 94, .12); }
+.tile:hover, .product-card:hover { border-color: var(--brand); box-shadow: 0 3px 8px rgba(11, 57, 94, .1); }
+/* В узких карточках «Запросить цену» помещается в одну строку */
+@media (max-width: 639px) { .product-card .btn { padding: 0 8px; font-size: 13.5px; } }
 .tile-photo, .product-photo { position: relative; overflow: hidden; background: #fff; }
 .tile-photo { aspect-ratio: 16 / 10; }
 .product-photo { aspect-ratio: 5 / 4; }
@@ -59,10 +74,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   display: flex; align-items: center; gap: 14px; width: 100%; padding: 16px; background: #fff; color: inherit; text-decoration: none;
   border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 1px 3px rgba(11, 57, 94, .08); transition: border-color .15s, box-shadow .15s;
 }
-.svc:hover { border-color: var(--brand); box-shadow: 0 6px 18px rgba(11, 57, 94, .12); }
+.svc:hover { border-color: var(--brand); box-shadow: 0 3px 8px rgba(11, 57, 94, .1); }
 
 .no-bar { scrollbar-width: none; }
 .no-bar::-webkit-scrollbar { display: none; }
+/* Меню на телефоне прокручивается вбок: край пункта гаснет, чтобы было видно, что есть ещё */
+@media (max-width: 1023px) {
+  .nav-fade { -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent); }
+}
 
 /* Список вместо сетки в разделе */
 #products[data-view="list"] { display: flex; flex-direction: column; }

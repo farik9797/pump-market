@@ -101,7 +101,8 @@
       $$('[data-view-btn]').forEach(function (b) {
         var on = b.getAttribute('data-view-btn') === view;
         b.setAttribute('aria-pressed', String(on));
-        b.className = 'btn ' + (on ? 'btn-primary' : 'btn-outline');
+        b.classList.toggle('btn-primary', on);
+        b.classList.toggle('btn-outline', !on);
       });
       try { localStorage.setItem('bs-view', view); } catch (e) { /* хранилище недоступно */ }
     };
