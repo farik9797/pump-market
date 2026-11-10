@@ -7,10 +7,12 @@
   $$('[data-open-form]').forEach(function (b) {
     b.addEventListener('click', function () {
       var subject = b.getAttribute('data-subject') || '';
+      var title = b.getAttribute('data-title') || 'Написать нам';
+      $('#ask-title').textContent = title;
       $('#ask-subject').value = subject;
       var line = $('#ask-about');
       line.textContent = subject;
-      line.hidden = !subject;
+      line.hidden = !subject || subject === title;
       $('#ask-form').hidden = false;
       $('#ask-done').hidden = true;
       if (ask.showModal) { ask.showModal(); } else { ask.setAttribute('open', ''); }
@@ -50,6 +52,16 @@
       b.setAttribute('aria-expanded', String(open));
       $$('[data-when]', b).forEach(function (i) { i.hidden = i.getAttribute('data-when') !== (open ? 'open' : 'closed'); });
     });
+  });
+
+  var menu = $('#catalog-menu');
+  var menuBtn = $('[data-toggle="catalog-menu"]');
+  var closeMenu = function () { menu.hidden = true; menuBtn.setAttribute('aria-expanded', 'false'); };
+  document.addEventListener('click', function (e) {
+    if (!menu.hidden && !menu.contains(e.target) && !menuBtn.contains(e.target)) { closeMenu(); }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !menu.hidden) { closeMenu(); menuBtn.focus(); }
   });
 
   var strip = $('#showcase');
