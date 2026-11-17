@@ -3,6 +3,7 @@
   --ink: #112B3F; --muted: #51626F; --line: #E1E8EE; --paper: #F2F7FA;
   --deep: #022338; --navy: #0B395E; --band: #043458; --foot: #052439;
   --brand: #006FB9; --brand-d: #005A96; --sky: #E5F4FA;
+  --wa: #15803D; --wa-d: #116632;
 }
 [hidden] { display: none !important; }
 html { scroll-behavior: smooth; }
@@ -41,6 +42,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .btn-light:hover { background: var(--sky); }
 .btn-ghost { background: rgba(2, 35, 56, .25); color: #fff; border-color: rgba(255, 255, 255, .75); }
 .btn-ghost:hover { background: rgba(255, 255, 255, .14); }
+/* WhatsApp: зелёный тёмнее фирменного #25D366, чтобы белый знак и текст читались (5:1) */
+.btn-wa { background: var(--wa); color: #fff; }
+.btn-wa:hover { background: var(--wa-d); }
 
 .field { display: grid; gap: 4px; font-size: 14px; }
 .field input, .field textarea, .field select {
@@ -70,6 +74,19 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .product-photo { aspect-ratio: 5 / 4; }
 .tile-photo > img, .product-photo > img { position: absolute; inset: 12px; width: calc(100% - 24px); height: calc(100% - 24px); object-fit: contain; }
 
+/* Значок подкатегории: фото товара в рамке, как иконки разделов, только квадратом */
+.sub-thumb { position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 32px; height: 32px; overflow: hidden; background: #fff; border: 1px solid var(--line); border-radius: 6px; }
+.sub-thumb > img { position: absolute; inset: 2px; width: calc(100% - 4px); height: calc(100% - 4px); object-fit: contain; }
+
+/* Цепочка слива-налива */
+.step-photo { position: relative; flex-shrink: 0; width: 112px; overflow: hidden; background: #fff; border-radius: 12px 0 0 12px; }
+.step-photo > img { position: absolute; inset: 8px; width: calc(100% - 16px); height: calc(100% - 16px); object-fit: contain; }
+@media (min-width: 768px) { .step-photo { width: auto; aspect-ratio: 16 / 10; border-radius: 12px 12px 0 0; } }
+.step-num { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: var(--navy); color: #fff; font-size: 13px; font-weight: 700; }
+.step-arrow { position: absolute; z-index: 1; display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: var(--paper); border: 1px solid var(--line); color: var(--brand); left: 50%; bottom: -26px; transform: translateX(-50%); }
+@media (min-width: 768px) and (max-width: 1279px) { .step-arrow { display: none; } }
+@media (min-width: 1280px) { .step-arrow { left: auto; bottom: auto; top: 30%; right: -26px; transform: none; } }
+
 .svc {
   display: flex; align-items: center; gap: 14px; width: 100%; padding: 16px; background: #fff; color: inherit; text-decoration: none;
   border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 1px 3px rgba(11, 57, 94, .08); transition: border-color .15s, box-shadow .15s;
@@ -88,7 +105,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 #products[data-view="list"] .product-card { flex-direction: row; }
 #products[data-view="list"] .product-photo { flex: 0 0 168px; aspect-ratio: 1 / 1; }
 #products[data-view="list"] .product-body { min-width: 0; padding-top: 14px; }
-#products[data-view="list"] .product-body .btn { align-self: flex-start; }
+#products[data-view="list"] .product-body .card-actions { align-self: flex-start; width: 100%; max-width: 300px; }
 @media (max-width: 479px) { #products[data-view="list"] .product-photo { flex-basis: 104px; } }
 
 /* Описание товара и текстовые страницы */
